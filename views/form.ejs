@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <form action="/" method="post">
+        <input type="text" placeholder="Username" id="inputbox" autocomplete="off" required>
+        <input type="password" placeholder="Password" id="password">
+        <select id="selectbox" required>
+            <option value="Back-End-Dev">Back-End-Dev</option>
+            <option value="Front-End-Dev">Front-End-Dev</option>
+            <option value="Full-Stack-Dev">Full-Stack-Dev</option>
+            <option value="Database-Admin">Database-Admin</option>
+            <option value="UI/UX-Designer">UI/UX-Designer</option>
+            <option value="DevOps-Engineer">DevOps-Engineer</option>
+            <option value="Mobile-App-Developer">Mobile-App-Developer</option>
+            <option value="HTML">HTML</option>
+            <option value="CSS">CSS</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="PHP">PHP</option>
+            <option value="Python">Python</option>
+            <option value="Java">Java</option>
+            <option value="Ruby">Ruby</option>
+            <option value="C++">C++</option>
+            <option value="React">React</option>
+            <option value="Angular">Angular</option>
+            <option value="Vue">Vue</option>
+            <option value="Node.js">Node.js</option>
+            <option value="Express.js">Express.js</option>
+            <option value="Django">Django</option>
+            <option value="Spring">Spring</option>
+            <option value="MongoDB">MongoDB</option>
+            <option value="MySQL">MySQL</option>
+            <option value="PostgreSQL">PostgreSQL</option>
+            <option value="AWS">AWS</option>
+            <option value="Azure">Azure</option>
+            
+            <!-- Add more options as needed -->
+        </select>
+        <input class="btn btn-outline-secondary" type="submit" value="Submit" id="subbutton">
+    </form>
+</body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<style>
+    body{
+        background-color: #0a0024;
+        color: #fff;
+        font-family: sans-serif;
+        text-align: center;
+        padding: 20px;
+    }
+    *::selection{
+        color: aqua;
+    }
+    #inputbox , #selectbox, #password{
+        padding: 10px; 
+        margin: 5px; 
+        border: 1px solid #ccc; 
+        border-radius: 5px;
+        color: #8B758B;
+    }
+    #bb{
+        padding: 10px; 
+        margin: 5px; 
+        background-color: rgba(red, green, blue, 0.0); 
+        color: #0a0024; 
+        border: 5px solid hwb(122 30% 31%); 
+        border-radius: 10px; 
+        cursor: pointer;
+    }
+    
+    #selectbox:hover {
+        border-color: #555;
+    }
+    
+    #selectbox:focus {
+        outline: none;
+        border-color: #2196F3;
+        box-shadow: 0 0 5px rgba(33, 150, 243, 0.7);
+    }
+</style>
+<script>
+    document.querySelector('#subbutton').addEventListener('click', () => {
+        console.log(document.querySelector('#inputbox').value);
+        fetch('backend-api-endpoint', {
+            method: 'POST', // or 'GET' depending on your requirements
+            headers: {
+                'Content-Type': 'application/json', // set the appropriate content type
+            },
+            body: JSON.stringify({
+                'username': document.querySelector('#inputbox').value,
+                'password': document.querySelector('#password').value,
+                'skill': document.querySelector('#selectbox').value
+            }), // convert data to JSON format
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response from the backend
+        })
+        .catch(error => {
+            // Handle errors
+        });
+    });
+      
+    
+</script>
+</html>
