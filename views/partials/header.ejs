@@ -1,0 +1,35 @@
+<header>
+    <style>
+        body{
+            margin: 0 ;
+            padding: 0;
+        }
+        #nav-bar {
+            background-color: #140829;
+            overflow: hidden;
+        }
+        
+        .nav-items {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: all 0.3s; /* Add transition for a smooth effect */
+        }
+        
+        .nav-items:hover {
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            color: transparent; /* Hide the text during hover */
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+    </style>
+
+    <nav id="nav-bar">
+        <a href="/" class="nav-items">Home</a>
+        <a href="/signup" class="nav-items">Signup</a>
+    </nav>
+
+</header>
