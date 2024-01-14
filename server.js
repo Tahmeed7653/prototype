@@ -20,7 +20,7 @@ const exportContent = {
 //     // Add more objects as needed
 // ];
 
-const userdata = [
+let userdata = [
     {
         username: '',
         password: '', 
@@ -64,26 +64,23 @@ app.post('/backend-api-endpoint', async (req, res) => {
     userdata.push({ username,password, skill });
     try{
         const userDB = await User.create({username,password,skill})
-        console.log(userDB)
     }catch(e){
-        console.log(e)
+
     }
-    
-    console.log(username);
-    
-    console.log(userdata);
     res.json({ status: 'success' });
 });
 
 app.get('/', (req, res) => {
-    exportContent.username = userdata[0].username;
-    res.render('home', {exportContent,userdata});
+    User.find()
+    .then((r)=>{
+        userdata = r
+        res.render('home', {userdata});
+    })
+    
 });
 
 app.post('/', (req, res) => {
-    // get the message using socket
     res.redirect('/');
-    // Redirect the user to the home page or perform any other necessary actions
 });
 
 app.get('/signup', (req, res) => {
