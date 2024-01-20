@@ -79,7 +79,6 @@ app.post('/lreq', async (req, res) => {
 app.get('/', (req, res) => {
     User.find()
         .then((userdata) => {
-            console.log(userdata)
             res.render('home', { userdata });
         })
         .catch(error => {
