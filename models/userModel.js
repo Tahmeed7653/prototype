@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     skill: {
         type: String,
         required: true
+    },
+    logedin: {
+        type: Boolean,
+        required: true
     }
 })
 

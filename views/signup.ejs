@@ -91,7 +91,7 @@
 <script>
     document.querySelector('#subbutton').addEventListener('click', () => {
         console.log(document.querySelector('#inputbox').value);
-        fetch('backend-api-endpoint', {
+        fetch('sreq', {
             method: 'POST', // or 'GET' depending on your requirements
             headers: {
                 'Content-Type': 'application/json', // set the appropriate content type

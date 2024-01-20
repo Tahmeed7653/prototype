@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <h1><%=user.username%></h1><h2>Contact:123123</h2>
+    <div>
+        <%= user.username%>, an accomplished backend web designer, brings a wealth of technical acumen and professional expertise to the digital landscape. With a profound commitment to precision and excellence, he has emerged as a pivotal figure in the domain of backend development.
+        <br>
+        <%= user.username%> embarked on his journey into the intricacies of web design fueled by an innate curiosity for coding and an unwavering dedication to problem-solving. His comprehensive grasp of server-side technologies, ases, and backend frameworks positions him as a proficient architect of dynamic and scalable web applications. From conceptualization to implementation, <%= user.username%> excels in designing backend systems that serve as the cornerstone of seamless and responsive user experiences.
+        <br><br>
+        Proficient in an array of programming languages, including Python, Node.js, PHP, and Java, <%= user.username%>'s versatility allows him to discern and deploy the most fitting tools for each project. This approach ensures not only optimal performance but also the longevity and maintainability of the solutions he delivers.
+        <br><br>
+        An outstanding attribute of <%= user.username%> is his discerning eye for optimizing ase structures and seamlessly integrating them with frontend interfaces. His commitment to efficiency is evident in his capacity to create backend solutions that meet both technical requirements and elevate overall system performance.
+        <br><br>
+        Beyond technical adeptness, <%= user.username%> is recognized for his collaborative ethos and effective communication skills. Flourishing in multidisciplinary teams, he adeptly translates intricate technical concepts into user-friendly solutions. His steadfast commitment to remaining abreast of industry trends and emerging technologies positions him as a dependable and forward-thinking backend web designer.
+        <br><br>
+        Whether orchestrating the architecture of RESTful APIs, fine-tuning ase queries, or ensuring the security and reliability of backend systems, <%= user.username%>'s portfolio resonates with a mosaic of successful projects. His passion for perpetual learning, coupled with an unwavering commitment to delivering superlative results, establishes <%= user.username%> as an invaluable asset in the dynamic and ever-evolving landscape of backend web design.
+    </div>
+    <a href="/"><button onclick="signoutuser()">Signout</button></a>
+    <a href="/"><button onclick="deleteuser()">Delete</button></a>
+    
+</body>
+<style>
+    body {
+        background-color: #0a0024;
+        color: #fff;
+        font-family: 'DM Mono', monospace;
+        padding: 20px;
+        margin: 0; /* Reset default margin */
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 90vh;
+        overflow-x: hidden;
+    }
+    *::selection{
+        color: aqua;
+    }
+
+    h1,h2,div {
+        position: relative;
+        left: 10px;
+    }
+    
+    h1 {
+        margin-bottom: 20px;
+    }
+    
+    div {
+        background-color: rgb(29, 25, 39);
+        flex: 1; /* Make the div take the remaining available space */
+        margin-top: 20px; /* Added margin to the top */
+        padding: 10px;
+        font-family:'Courier New', Courier, monospace;
+        border-radius: 2%;
+    }
+    a button {
+        padding: 10px;
+        margin: 5px;
+        width: 99%;
+        background-color: rgba(255, 255, 255, 0);
+        color: hwb(0 39% 0%);
+        border: 2px solid hwb(0 39% 0%); /* Adjusted border size */
+        border-radius: 0%;
+        cursor: pointer;
+        outline: none;
+
+        
+    }
+
+    a{
+        text-decoration: none;
+        display: flex;
+    }
+</style>
+<script>
+    const deleteuser = () => {
+        fetch('<%=user._id%>', {
+            method: 'DELETE', // or 'GET' depending on your requirements
+            headers: {
+                'Content-Type': 'application/json', // set the appropriate content type
+            },
+            body: JSON.stringify({
+                
+            }), // convert data to JSON format
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response from the backend
+        })
+        .catch(error => {
+            // Handle errors
+        });
+    }
+    const signoutuser = () => {
+        fetch('<%=user._id%>', {
+            method: 'POST', // or 'GET' depending on your requirements
+            headers: {
+                'Content-Type': 'application/json', // set the appropriate content type
+            },
+            body: JSON.stringify({
+                
+            }), // convert data to JSON format
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response from the backend
+        })
+        .catch(error => {
+            // Handle errors
+        });
+    }
+</script>
+</html>

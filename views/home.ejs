@@ -9,17 +9,13 @@
     <%- include('partials/header') %>
     <section class="card-list">
         <% userdata.forEach(user => { %>
-            <% if (user.username.trim() !== '') { %>
+            <% if (user && user.username.trim() !== '' && user.logedin) { %>
                 <article class="card">
                     <header class="card-header">
-                        <p>Sep 11th 2020</p>
-                        <h2><a href="/<%= user.username %>" style="color:white;"><%= user.username %></a></h2>
+                        <p><%=user.logedin%></p>
+                        <h2><a href="/<%= user._id %>" style="color:white;"><%- user.username %></a></h2>
                     </header>
-        
-                    <!-- <div class="card-author">
-                        Jeff Delaney  You can replace this with the actual author data 
-                    </div> -->
-        
+            
                     <div class="tags">
                         <a href="#"><%= user.skill %></a>
                     </div>
@@ -62,7 +58,7 @@
 
     .card-list {
         display: flex;
-        overflow-x: auto; /* Enable horizontal scrolling */
+        overflow-x: hidden; /* Enable horizontal scrolling */
         scrollbar-width: thin; /* Firefox */
         scrollbar-color: #201c29 transparent; /* Firefox */
         position: absolute;

@@ -1,82 +1,88 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose')
+const favicon = require('serve-favicon');
+const path = require('path');
+const mongoose = require('mongoose');
 const User = require('./models/userModel');
 
-
-const exportContent = {
-    username: 'User not found',
-    title: 'API',
-};
-
-// const userdata = [
-//     { username: 'Tahmeed', skill: 'Back-End-Dev' },
-//     { username: 'John', skill: 'Front-End-Dev' },
-//     { username: 'Smith', skill: 'Full-Stack-Dev' },
-//     { username: 'Alex', skill: 'Database-Admin' },
-//     { username: 'Eva', skill: 'UI/UX-Designer' },
-//     { username: 'Max', skill: 'DevOps-Engineer' },
-//     { username: 'Lee', skill: 'Mobile-App-Developer' },
-//     // Add more objects as needed
-// ];
-
-let userdata = [
-    {
-        username: '',
-        password: '', 
-        skill: ''   
-    }
-        // Add more objects as needed
-    ];
-
-
-userdata.forEach(item => {
-    item.username = item.username.toUpperCase();
-});
-
-
-const dbURI ='mongodb+srv://tahmeedhm:test123@cluster0.ygqkaon.mongodb.net/?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://tahmeedhm:test123@cluster0.ygqkaon.mongodb.net/?retryWrites=true&w=majority';
 
 const app = express();
 const port = 3000;
+
+const faviconPath = path.join(__dirname, 'favicon.ico');
+app.use(favicon(faviconPath));
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-
-
-mongoose.connect(dbURI,{
+mongoose.connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then((result) => {
-    app.listen(port, () => {
-        console.log(`Server is running at Port:${port}`);
+    .then(() => {
+        app.listen(port, () => {
+            console.log(`Server is running at Port:${port}`);
+        });
+    })
+    .catch(error => {
+        console.error('Error connecting to the database:', error);
     });
-})
 
 
-app.post('/backend-api-endpoint', async (req, res) => {
+app.post('/sreq', async (req, res) => {
     let username = req.body.username.toUpperCase();
     let password = req.body.password;
     let skill = req.body.skill;
-    userdata.push({ username,password, skill });
-    try{
-        const userDB = await User.create({username,password,skill})
-    }catch(e){
-
+    try {
+        let temp = await User.create({ username, password, skill , logedin: true});
+        res.json({ status: 'success' });
+    } catch (e) {
+        console.error('Error creating user:', e);
+        res.status(500).json({ status: 'error', message: 'Internal Server Error' });
     }
-    res.json({ status: 'success' });
+});
+
+app.post('/lreq', async (req, res) => {
+    let username = req.body.username.toUpperCase();
+    let password = req.body.password;
+
+    try {
+        const userdata = await User.find();
+
+        userdata.forEach(user => {
+            if (user.username == username) {
+                if (user.password == password) {
+                    User.updateOne({ _id: user._id }, { $set: { logedin: true } })
+                    .then(r => {
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user details:', error);
+                        res.status(500).send('Internal Server Error');
+                    });
+                } else {
+                    
+                }
+            }
+        });
+
+    } catch (e) {
+        console.error('Error fetching user data:', e);
+        res.status(500).json('Error');
+    }
 });
 
 app.get('/', (req, res) => {
     User.find()
-    .then((r)=>{
-        userdata = r
-        res.render('home', {userdata});
-    })
-    
+        .then((userdata) => {
+            console.log(userdata)
+            res.render('home', { userdata });
+        })
+        .catch(error => {
+            console.error('Error fetching user data for home page:', error);
+            res.status(500).send('Internal Server Error');
+        });
 });
 
 app.post('/', (req, res) => {
@@ -84,19 +90,50 @@ app.post('/', (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-    res.render('form', exportContent);
+    res.render('signup');
+});
+
+app.get('/login', (req, res) => {
+    res.render('login');
 });
 
 app.get('/:id', (req, res) => {
     const userId = req.params.id;
-    const foundUser = userdata.find(user => user.username === userId.toUpperCase());
+    User.findById(userId)
+        .then(user => {
+            if (!user) {
+                res.status(404).send('User not found');
+                return;
+            }
 
-    if (foundUser) {
-        exportContent.username = foundUser.username.charAt(0).toUpperCase() + foundUser.username.slice(1).toLowerCase();
-    } else {
-        exportContent.username = 'User currently not available';
-    }
-
-    res.render('index', exportContent);
+            user.username = user.username.charAt(0).toUpperCase() + user.username.slice(1).toLowerCase();
+            res.render('details', { user });
+        })
+        .catch(error => {
+            console.error('Error fetching user details:', error);
+            res.status(500).send('Internal Server Error');
+        });
 });
+app.delete('/:id', (req, res) => {
+    const userId = req.params.id;
+    User.findByIdAndDelete(userId)
+        .then(user => {
+            
+        })
+        .catch(error => {
+            console.error('Error fetching user details:', error);
+            res.status(500).send('Internal Server Error');
+        });
+})
 
+app.post('/:id', (req, res) => {
+    const userId = req.params.id;
+    User.updateOne({ _id: userId }, { $set: { logedin: false } })
+        .then(r => {
+            
+        })
+        .catch(error => {
+            console.error('Error fetching user details:', error);
+            res.status(500).send('Internal Server Error');
+        });
+})
