@@ -32,7 +32,7 @@ mongoose.connect(dbURI, {
 
 
 app.post('/sreq', async (req, res) => {
-    let username = req.body.username.toUpperCase();
+    let username = req.body.username;
     let password = req.body.password;
     let skill = req.body.skill;
     try {
@@ -45,7 +45,7 @@ app.post('/sreq', async (req, res) => {
 });
 
 app.post('/lreq', async (req, res) => {
-    let username = req.body.username.toUpperCase();
+    let username = req.body.username;
     let password = req.body.password;
 
     try {
@@ -56,11 +56,14 @@ app.post('/lreq', async (req, res) => {
                 if (user.password == password) {
                     User.updateOne({ _id: user._id }, { $set: { logedin: true } })
                     .then(r => {
+                         res.json({ status:'success' });
+ 
                     })
                     .catch(error => {
                         console.error('Error fetching user details:', error);
                         res.status(500).send('Internal Server Error');
                     });
+                    
                 } else {
                     
                 }
@@ -105,8 +108,6 @@ app.get('/:id', (req, res) => {
                 res.status(404).send('User not found');
                 return;
             }
-
-            user.username = user.username.charAt(0).toUpperCase() + user.username.slice(1).toLowerCase();
             res.render('details', { user });
         })
         .catch(error => {

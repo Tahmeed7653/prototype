@@ -32,7 +32,7 @@
     <%- include('partials/header') %>
         <input type="text" placeholder="Username" id="inputbox" autocomplete="off" required>
         <input type="password" placeholder="Password" id="password">
-        <a href="/"><button class="btn btn-outline-secondary" id="subbutton" >Submit</button></a>
+        <button class="btn btn-outline-secondary" id="subbutton" >Submit</button>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -40,7 +40,7 @@
 
     <script>
         document.querySelector('#subbutton').addEventListener('click', () => {
-            console.log(document.querySelector('#inputbox').value);
+            
             fetch('/lreq', {
                 method: 'POST',
                 headers: {
@@ -56,6 +56,9 @@
                 console.log(data);
                 // Display a message to the user based on the response
                 // For example: document.getElementById('message').innerText = data;
+                
+                window.location.href = '/';
+                
             })
             .catch(error => {
                 console.log(error);
